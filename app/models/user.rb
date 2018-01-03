@@ -11,6 +11,6 @@ class User < ApplicationRecord
   # and is in between 8 and 40 chars long
   # and one of these special characters !@#$%^&*
   VALID_PASSWORD_REGEX = /\A(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,40}\z/
-  validates(:password, presence: true, length: { minimum: 8 }, format: { with: VALID_PASSWORD_REGEX})
+  validates(:password, presence: true, length: { in: 8..40 }, format: { with: VALID_PASSWORD_REGEX})
   has_secure_password
 end
