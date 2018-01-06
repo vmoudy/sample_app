@@ -13,4 +13,11 @@ class User < ApplicationRecord
   VALID_PASSWORD_REGEX = /\A(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,40}\z/
   validates(:password, presence: true, length: { in: 8..40 }, format: { with: VALID_PASSWORD_REGEX})
   has_secure_password
+
+  # Returns the hash digest of the given string.
+  def User.digest(string)
+    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
+
+    BCrypt::Password.create(string, cost: cost)
+  end
 end
